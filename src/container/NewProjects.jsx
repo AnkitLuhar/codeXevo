@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { FaChevronDown, FaHtml5, FaJs } from "react-icons/fa";
 import { FaCss3 } from "react-icons/fa6";
 import { FcSettings } from "react-icons/fc";
@@ -44,24 +44,24 @@ const NewProjects = () => {
     borderBottom: "1px solid #888", // Subtle, light border for horizontal panes
   };
 
-  useEffect(() => {
-    updateOutput();
-  }, [html, css, js]);
-
-  const updateOutput = () => {
+  const updateOutput = useCallback(() => {
     const combineOutput = `
     <html>
     <head>
-    <style>${css}</style>
+      <style>${css}</style>
     </head>
     <body>
-    ${html}
-    <script>${js}</script>
+      ${html}
+      <script>${js}</script>
     </body>
     </html>
     `;
     setOutput(combineOutput);
-  };
+  }, [html, css, js]);
+
+  useEffect(() => {
+    updateOutput();
+  }, [updateOutput]);
 
   const saveProgram = async () => {
     const id = `${Date.now()}`;
