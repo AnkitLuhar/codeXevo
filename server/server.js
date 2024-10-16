@@ -3,6 +3,7 @@ const cors = require("cors");
 const bodyParser = require("body-parser");
 const http = require("http");
 const { Server } = require("socket.io");
+const axios = require("axios");
 
 const app = express();
 const port = 5000;
@@ -21,6 +22,9 @@ app.post("/execute", async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 });
+// app.get("/execute", (req, res) => {
+//   res.send("execute line is clear");
+// });
 
 // Socket.IO setup
 const server = http.createServer(app);

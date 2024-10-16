@@ -5,7 +5,7 @@ import { initSocket } from "../socket";
 
 const CodeEditorWindow = () => {
   const [socket, setSocket] = useState(null);
-  const [code, setCode] = useState("//code here");
+  const [code, setCode] = useState("//code here::");
   const [output, setOutput] = useState("");
   const [language, setLanguage] = useState("nodejs");
   const [versionIndex, setVersionIndex] = useState("0");
@@ -67,21 +67,24 @@ const CodeEditorWindow = () => {
       console.log("Version Index:", versionIndex);
 
       // Debugging output for environment variables
-      console.log("Client ID:", process.env.REACT_APP_JDOODLE_CLIENT_ID);
-      console.log(
-        "Client Secret:",
-        process.env.REACT_APP_JDOODLE_CLIENT_SECRET
-      );
+      // console.log("Client ID:", process.env.REACT_APP_JDOODLE_CLIENT_ID);
+      // console.log(
+      //   "Client Secret:",
+      //   process.env.REACT_APP_JDOODLE_CLIENT_SECRET
+      // );
 
-      const response = await axios.post("http://localhost:5000/execute", {
-        clientId: process.env.REACT_APP_JDOODLE_CLIENT_ID,
-        clientSecret: process.env.REACT_APP_JDOODLE_CLIENT_SECRET,
-        script: code,
-        stdin: "",
-        language: language,
-        versionIndex: versionIndex,
-        compileOnly: false,
-      });
+      const response = await axios.post(
+        "https://codexevo-sockets-server.onrender.com/execute",
+        {
+          clientId: process.env.REACT_APP_JDOODLE_CLIENT_ID,
+          clientSecret: process.env.REACT_APP_JDOODLE_CLIENT_SECRET,
+          script: code,
+          stdin: "",
+          language: language,
+          versionIndex: versionIndex,
+          compileOnly: false,
+        }
+      );
 
       console.log("Response from API:", response.data);
 
